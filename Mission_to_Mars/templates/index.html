@@ -15,16 +15,27 @@
       <h1>Mars Scrape</h1>
       <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape Mars Data</a></p>
     </div>
+  </div>
 
-    
+  <div class ='container-fluid'> 
     <div class="row">
       <div class="col-md-12">
         <h2>{{articles.article_title[0]}}</h2>
         <small>{{articles.article_date[0]}}</small>
         <h3>{{articles.article_paragraph[0]}}</h3>
       </div>
+      <div class="col-md-12">
+        <iframe src='mars_fact_table.html' title="Mars Facts"></iframe>
+      </div>
     </div>
-
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Featured Mars Image</h2>
+      </div>
+    </div>
+    <div class="row">
+      <img src= '{{articles.featured_image_url}}' alt='Mars Featured image'>
+    </div>
   </div>
 </body>
 
