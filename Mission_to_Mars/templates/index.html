@@ -4,23 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Find a Phone</title>
+  <title>Mars Data</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
-  <div class="container">
+  <div class="container-fluid">
 
     <div class="jumbotron text-center">
       <h1>Mars Scrape</h1>
       <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape Mars Data</a></p>
     </div>
 
-    <!-- Phone Listings -->
+    
     <div class="row">
       <div class="col-md-12">
-        <h4>{{articles.article_title}} {{articles.article_paragraph}}</h4>
-        <small>{{articles.date}}</small>
+        <h2>{{articles.article_title[0]}}</h2>
+        <small>{{articles.article_date[0]}}</small>
+        <h3>{{articles.article_paragraph[0]}}</h3>
       </div>
     </div>
 

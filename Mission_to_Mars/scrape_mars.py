@@ -15,16 +15,16 @@ def scrape():
     client.drop_database('mars_db')
     db = client.mars_db
     collection = db.articles
-    
-    nerdy_mars =[]
-    mars_dict={}
-    
+
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
     mars_url = 'https://mars.nasa.gov/news/'
     browser.visit(mars_url)
+
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
+    mars_dict = {'article_title':[], 'article_date':[], 'article_paragraph':[],
+                'featured_image_url':[], 'title':[], 'img_url':[]}
 
     results =soup.find('div', class_='grid_layout')
     list_1 = results.find('li', class_='slide')
@@ -34,30 +34,23 @@ def scrape():
     mars_title = container_text.find('a').text
     mars_p = container.find('div', class_='article_teaser_body').text
     mars_date = container_text.find('div', class_='list_date').text
-    mars_dict['article_title']= mars_title
-    mars_dict['article_date'] = mars_date
-    mars_dict['article_paragraph'] = mars_p
-    nerdy_mars.append(mars_dict)
-
+    mars_dict['article_title'].append(mars_title)
+    mars_dict['article_date'].append(mars_date)
+    mars_dict['article_paragraph'].append(mars_p)
 
     image_url ='https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/index.html'
     browser.visit(image_url)
     base_url='https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/'
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
-    mars_dict={}
-    
     results = soup.find('div', class_='header')
     link = results.find('img', class_='headerimage')['src']
     featured_mars_url = f'{base_url + link}'
-    mars_dict['fetured_image_url'] = featured_mars_url
-    nerdy_mars.append(mars_dict)
-
+    mars_dict['featured_image_url'].append(featured_mars_url)
 
     url = 'https://space-facts.com/mars/'
     mars_fact_tabe = pd.read_html(url)
-    mars_fact_tabe
-    mars_table=mars_fact_tabe[0]    
+    mars_table=mars_fact_tabe[0]
 
     mars_hemis_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(mars_hemis_url)
@@ -66,16 +59,15 @@ def scrape():
     soup = BeautifulSoup(html, 'html.parser')
     results =soup.find_all('div', class_='description')
     for names in results:
-        mars_dict={}
         hemi = names.find('h3').text
         browser.click_link_by_partial_text(hemi)
         html = browser.html
         soup = BeautifulSoup(html, 'html.parser')
         mars_img_url = soup.find_all('img')[5]['src']
-        mars_dict['title'] = hemi
-        mars_dict['img_url'] =base_url + mars_img_url
-        nerdy_mars.append(mars_dict)
+        mars_dict['title'].append(hemi)
+        mars_dict['img_url'].append(base_url + mars_img_url)
         browser.back()
-    print(nerdy_mars)   
     browser.quit()
-    return nerdy_mars
+   
+
+    return mars_dict
