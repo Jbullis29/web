@@ -17,10 +17,6 @@ def scraper():
     mongo.db.articles.update({}, mars_data, upsert=True)
     return redirect("/")
 
-
-
-
-
 if __name__ == "__main__":
     app.run(debug=True)
 

@@ -24,7 +24,7 @@ def scrape():
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
     mars_dict = {'article_title':[], 'article_date':[], 'article_paragraph':[],
-                'featured_image_url':[], 'title':[], 'img_url':[]}
+                'featured_image_url':[]}
 
     results =soup.find('div', class_='grid_layout')
     list_1 = results.find('li', class_='slide')
@@ -51,7 +51,8 @@ def scrape():
     url = 'https://space-facts.com/mars/'
     mars_fact_tabe = pd.read_html(url)
     mars_table=mars_fact_tabe[0]
-    mars_table.to_html('templates/Mars_fact_table.html')
+    mars_fact = mars_table.to_html()
+    mars_dict['mars_facts'] = mars_fact
 
     mars_hemis_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(mars_hemis_url)
@@ -59,15 +60,17 @@ def scrape():
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
     results =soup.find_all('div', class_='description')
+    hemi_dict={'hemi_title':[], 'img_url':[]}
     for names in results:
         hemi = names.find('h3').text
         browser.click_link_by_partial_text(hemi)
         html = browser.html
         soup = BeautifulSoup(html, 'html.parser')
         mars_img_url = soup.find_all('img')[5]['src']
-        mars_dict['title'].append(hemi)
-        mars_dict['img_url'].append(base_url + mars_img_url)
+        hemi_dict['hemi_title'].append(hemi)
+        hemi_dict['img_url'].append(base_url + mars_img_url)
         browser.back()
+    mars_dict['title'] = hemi_dict
     browser.quit()
    
 
