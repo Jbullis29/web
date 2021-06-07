@@ -8,8 +8,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 import pymongo
 import datetime
 import requests 
-
+#took my scrape IPYNB and converted it to a python file
+#then tabbed it all over to create a function 
 def scrape():
+    #eveything the same in here as in the IPYNB
     conn = 'mongodb://localhost:27017'
     client = pymongo.MongoClient(conn)
     client.drop_database('mars_db')
@@ -73,5 +75,5 @@ def scrape():
     mars_dict['title'] = hemi_dict
     browser.quit()
    
-
+#this retuns the dictionary instead of adding information to the database which will be done in flask
     return mars_dict
