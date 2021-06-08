@@ -1,3 +1,4 @@
+<!-- Set up the basic htmal stuff -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,22 +10,25 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
   </head>
+  <!-- close the Header -->
   <body>
     <div class="container">
-      <!-- Add Jumbotron to Header -->
+      <!-- create a jumbotron at the top of the body -->                          -->
       <div class="jumbotron text-center">
         <h1>Mission to Mars</h1>
-        <!-- Add a button to activate scraping script -->
+        <!-- Add a button connect it to scrape function so when you click it the scrape runs -->
         <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
       </div>
 
-      <!-- Add section for Mars News -->
+      <!-- Add section for Mars News article -->
       <div class="row" id="mars-news">
         <div class="col-md-12">
           <div class="media">
             <div class="media-body">
               <h2>Latest Mars News</h2>
+              <!-- connect to mongo db by doing{{ article connect to artic collection in mars_db. call item you want}} -->
               <h4 class="media-heading">{{ articles.article_title[0] }}</h4>
+              <!-- {{ article connect to artic collection in mars_db. call item you want}} -->
               <p>{{ articles.article_paragraph[0] }}</p>
             </div>
           </div>
@@ -58,7 +62,7 @@
         <div class="page-header">
           <h2 class="text-center">Mars Hemispheres</h2>
         </div>
-
+        <!-- Got the pictures to show up by calling object in collection then using I to change index value -->
         {% for i in range(4) %}
         <div class="col-md-3">
           <div class="thumbnail">
